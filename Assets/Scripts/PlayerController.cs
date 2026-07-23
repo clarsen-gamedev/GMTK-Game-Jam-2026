@@ -27,11 +27,15 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
+        float moveX = 0f;
+        float moveY = 0f;
 
-        moveInput = new Vector2(moveX, moveY);
-        moveInput = moveInput.normalized;
+        if (Input.GetKey(KeyCode.W)) moveY += 1f;
+        if (Input.GetKey(KeyCode.S)) moveY -= 1f;
+        if (Input.GetKey(KeyCode.A)) moveX -= 1f;
+        if (Input.GetKey(KeyCode.D)) moveX += 1f;
+
+        moveInput = new Vector2(moveX, moveY).normalized;
     }
 
     private void FixedUpdate()

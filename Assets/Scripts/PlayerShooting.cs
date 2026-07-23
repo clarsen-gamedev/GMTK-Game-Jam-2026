@@ -29,8 +29,8 @@ public class PlayerShooting : MonoBehaviour
 
         if (Input.GetKey(KeyCode.UpArrow)) shootY = 1f;
         if (Input.GetKey(KeyCode.DownArrow)) shootY = -1f;
-        if (Input.GetKey(KeyCode.RightArrow)) shootY = 1f;
-        if (Input.GetKey(KeyCode.LeftArrow)) shootY = -1f;
+        if (Input.GetKey(KeyCode.RightArrow)) shootX = 1f;
+        if (Input.GetKey(KeyCode.LeftArrow)) shootX = -1f;
 
         Vector2 shootDirection = new Vector2(shootX, shootY);
 
