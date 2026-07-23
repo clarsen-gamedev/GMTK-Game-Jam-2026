@@ -22,8 +22,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float timeAddedOnKill = 3f;
     [SerializeField] private float timeLostOnImpact = 5f;
 
+    [Header("Hit Flash Settings")]
+    [SerializeField] private Color flashColor = Color.red;
+    [SerializeField] private float flashDuration = 0.1f;
+
     private Transform targetTransform;
     private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
+    private Color originalColor;
+    private Coroutine flashRoutine;
     private float currentHealth;
     #endregion
 
@@ -32,12 +39,23 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
+
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            originalColor = spriteRenderer.color;
+        }
     }
 
     private void Start()
     {
         currentHealth = maxHealth;
         FindTarget();
+    }
+
+    public void SetNewTarget(Transform newTarget)
+    {
+        targetTransform = newTarget;
     }
 
     private void FindTarget()
@@ -49,8 +67,15 @@ public class Enemy : MonoBehaviour
         }
         else if (targetType == TargetType.DEFENSE_POINT)
         {
-            GameObject defenseObj = GameObject.FindGameObjectWithTag("DefensePoint");
-            if (defenseObj != null) targetTransform = defenseObj.transform;
+            // Ask the DefensePointManager for the active target
+            if (DefensePointManager.Instance != null)
+            {
+                targetTransform = DefensePointManager.Instance.GetCurrentDefensePoint();
+                DefensePointManager.Instance.RegisterDefenseEnemy(this);
+            }
+
+            //GameObject defenseObj = GameObject.FindGameObjectWithTag("DefensePoint");
+            //if (defenseObj != null) targetTransform = defenseObj.transform;
         }
     }
 
@@ -80,6 +105,32 @@ public class Enemy : MonoBehaviour
             }
             Destroy(gameObject);
         }
+        else
+        {
+            // Enemy survived the hit -> Flash red!
+            TriggerHitFlash();
+        }
+    }
+
+    private void TriggerHitFlash()
+    {
+        if (spriteRenderer == null) return;
+
+        // Stop previous flash coroutine if shot repeatedly in rapid succession
+        if (flashRoutine != null)
+        {
+            StopCoroutine(flashRoutine);
+        }
+
+        flashRoutine = StartCoroutine(FlashRoutine());
+    }
+
+    private IEnumerator FlashRoutine()
+    {
+        spriteRenderer.color = flashColor;
+        yield return new WaitForSeconds(flashDuration);
+        spriteRenderer.color = originalColor;
+        flashRoutine = null;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -114,33 +165,15 @@ public class Enemy : MonoBehaviour
             // Despawn the enemy
             Destroy(gameObject);
         }
+    }
 
-        //// Check if enemy reached its designated target
-        //bool hitPlayer = targetType == TargetType.PLAYER && collision.CompareTag("Player");
-        //bool hitDefense = targetType == TargetType.DEFENSE_POINT && collision.CompareTag("DefensePoint");
-
-        //bool shouldExplode = (targetType == TargetType.PLAYER && hitPlayer) ||
-        //                     (targetType == TargetType.DEFENSE_POINT && (hitDefense || hitPlayer));
-
-        //if (shouldExplode)
-        //{
-        //    if (GameManager.Instance != null)
-        //    {
-        //        GameManager.Instance.AddTime(-timeLostOnImpact);
-        //    }
-        //}
-
-        //Destroy(gameObject);
-
-        //if (hitPlayer || hitDefense)
-        //{
-        //    // Enemy reached targer -> subtract time penalty
-        //    if (GameManager.Instance != null)
-        //    {
-        //        GameManager.Instance.AddTime(-timeLostOnImpact);
-        //    }
-        //    Destroy(gameObject);
-        //}
+    private void OnDestroy()
+    {
+        // Clean up registration when enemy is killed or despawns
+        if (targetType == TargetType.DEFENSE_POINT && DefensePointManager.Instance != null)
+        {
+            DefensePointManager.Instance.UnregisterDefenseEnemy(this);
+        }
     }
     #endregion
 }

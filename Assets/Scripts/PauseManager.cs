@@ -1,3 +1,8 @@
+// Name: PauseManager.cs
+// Author: Connor Larsen
+// Date: 07/23/2026
+// Description: Manages the pause screen and it's various functions
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
