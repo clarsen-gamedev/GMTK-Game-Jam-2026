@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Over Settings")]
     [SerializeField] private GameObject gameOverPanel;
+    public bool IsGameOver => isGameOver;
 
     private bool isTimerRunning = true;
     private bool isGameOver = false;

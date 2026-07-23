@@ -33,6 +33,9 @@ public class PauseManager : MonoBehaviour
 
     private void Update()
     {
+        // Do NOT allow pausing if the game is already in a Game Over state
+        if (GameManager.Instance != null && GameManager.Instance.IsGameOver) return;
+
         // Pressing ESC toggles pause mode
         if (Input.GetKeyDown(KeyCode.Escape))
         {
