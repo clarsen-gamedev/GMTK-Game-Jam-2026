@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,10 +15,14 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance {  get; private set; }
 
     [Header("Timer Settings")]
-    [SerializeField] private float timeRemaining = 60f;
+    [SerializeField] private float timeRemaining = 61f;
     [SerializeField] private TextMeshProUGUI timerText;
 
+    [Header("Game Over Settings")]
+    [SerializeField] private GameObject gameOverPanel;
+
     private bool isTimerRunning = true;
+    private bool isGameOver = false;
     #endregion
 
     #region Functions
@@ -35,6 +40,15 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        #region Game Over Logic
+        if (isGameOver)
+        {
+            if (Input.GetKeyDown(KeyCode.R)) RestartGame();
+            return;
+        }
+        #endregion
+
+        #region Countdown Timer Logic
         if (!isTimerRunning) return;
 
         if (timeRemaining > 0)
@@ -49,6 +63,7 @@ public class GameManager : MonoBehaviour
             UpdateTimerUI();
             OnTimeExpired();
         }
+        #endregion
     }
 
     private void UpdateTimerUI()
@@ -63,8 +78,20 @@ public class GameManager : MonoBehaviour
 
     private void OnTimeExpired()
     {
-        Debug.Log("Time's up! Game Over!");
-        // Game over screen
+        isGameOver = true;
+
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+        }
+
+        Time.timeScale = 0f;
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void AddTime(float amount)
