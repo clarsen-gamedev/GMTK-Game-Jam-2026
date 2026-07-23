@@ -36,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
         if (spawnPoints.Length == 0) return;
 
         Transform chosenSpawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        GameObject prefabToSpawn = (Random.value > 0.5f) ? playerChaserPrefab : defenseChaserPrefab;
+        GameObject prefabToSpawn = (Random.value > 0.8f) ? playerChaserPrefab : defenseChaserPrefab;
 
         Instantiate(prefabToSpawn, chosenSpawn.position, Quaternion.identity);
     }
