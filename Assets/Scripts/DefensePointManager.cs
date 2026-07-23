@@ -41,6 +41,13 @@ public class DefensePointManager : MonoBehaviour
     private void Start()
     {
         nextSwitchTime = Time.time + switchInterval;
+
+        // Select a random defense point at the start of the game
+        if (defensePoints != null && defensePoints.Length > 0)
+        {
+            currentPointIndex = Random.Range(0, defensePoints.Length);
+        }
+
         UpdateDefensePointColors();
     }
 
@@ -57,8 +64,13 @@ public class DefensePointManager : MonoBehaviour
 
     private void SwitchToNextDefensePoint()
     {
-        // Pick the next index in the array
-        currentPointIndex = (currentPointIndex + 1) % defensePoints.Length;
+        // Randomly select a new point index (excluding the current point)
+        int newIndex = currentPointIndex;
+        while (newIndex == currentPointIndex)
+        {
+            newIndex = Random.Range(0, defensePoints.Length);
+        }
+        currentPointIndex = newIndex;
         Transform newTarget = GetCurrentDefensePoint();
 
         // Update all currently living defense enemies
