@@ -7,31 +7,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEditor.PackageManager;
+//using UnityEditor.PackageManager;
 
 public class TimerFeedbackUI : MonoBehaviour
 {
     #region Variables
     public static TimerFeedbackUI Instance { get; private set; }
 
-    [Header("UI Reference")]
-    [SerializeField] private TextMeshProUGUI feedbackText;
+    [Header("Timer Feedback UI")]
+    [SerializeField] private TextMeshProUGUI timerFeedbackText;
+    [SerializeField] private Color gainColor = Color.green;
+    [SerializeField] private Color lossColor = Color.red;
+
+    [Header("Defense Point Notification UI")]
+    [SerializeField] private TextMeshProUGUI defenseNotificationText;
 
     [Header("Animation Settings")]
     [SerializeField] private float popInDuration = 0.15f;
     [SerializeField] private float displayDuration = 0.8f;
-    [SerializeField] private float fadeDuration = 0.4f;
+    [SerializeField] private float fadeOutDuration = 0.4f;
 
     [Header("Scale Settings")]
     [SerializeField] private Vector3 startScale = new Vector3(0.3f, 0.3f, 1f);
     [SerializeField] private Vector3 popScale = new Vector3(1.3f, 1.3f, 1f);
-    [SerializeField] private Vector3 normalScale = new Vector3(1f, 1f, 1f);
+    [SerializeField] private Vector3 normalScale = new Vector3(1f, 1f, 1f);    
 
-    [Header("Colors")]
-    [SerializeField] private Color gainColor = Color.green;
-    [SerializeField] private Color lossColor = Color.red;
-
-    private Coroutine activePopRoutine;
+    private Coroutine timerRoutine;
+    private Coroutine defenseRoutine;
     #endregion
 
     #region Functions
@@ -40,51 +42,59 @@ public class TimerFeedbackUI : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        // Hide the feedback text at the start
-        if (feedbackText != null )
-        {
-            SetTextAlpha(0f);   // Make text invisible
-            feedbackText.transform.localScale = startScale;
-        }
+        // Hide all feedback text at the start
+        if (timerFeedbackText != null) ResetText(timerFeedbackText);
+        if (defenseNotificationText != null) ResetText(defenseNotificationText);
     }
 
+    #region Timer Change Feedback
     // Displays floating text showing time added or lost
     public void ShowFeedback(float amount)
     {
-        if (feedbackText == null || amount == 0f) return;
+        if (timerFeedbackText == null || amount == 0f) return;
 
         // Stop existing feedback animation if a new one is triggered quickly
-        if (activePopRoutine != null)
-        {
-            StopCoroutine(activePopRoutine);
-        }
+        if (timerRoutine != null) StopCoroutine(timerRoutine);
 
         if (amount > 0)
         {
-            feedbackText.text = $"+{amount:F0}s";
-            feedbackText.color = gainColor;
+            timerFeedbackText.text = $"+{amount:F0}s";
+            timerFeedbackText.color = gainColor;
         }
         else
         {
-            feedbackText.text = $"{amount:F0}s";
-            feedbackText.color = lossColor;
+            timerFeedbackText.text = $"{amount:F0}s";
+            timerFeedbackText.color = lossColor;
         }
 
-        activePopRoutine = StartCoroutine(AnimateFeedback());
+        timerRoutine = StartCoroutine(AnimateText(timerFeedbackText));
     }
+    #endregion
 
-    private IEnumerator AnimateFeedback()
+    #region Defense Point Notification
+    public void ShowDefensePointNotification(string message)
+    {
+        if (defenseNotificationText == null) return;
+        if (defenseRoutine != null) StopCoroutine(defenseRoutine);
+
+        defenseNotificationText.text = message;
+        defenseRoutine = StartCoroutine(AnimateText(defenseNotificationText));
+    }    
+    #endregion
+
+    private IEnumerator AnimateText(TextMeshProUGUI targetText)
     {
         float elapsed = 0f;
-        Color initialColor = feedbackText.color;
+        Color initialColor = targetText.color;
 
         #region Fast Fade In & Pop/Scale Up
         while (elapsed < popInDuration)
         {
             elapsed += Time.unscaledDeltaTime;
             float progress = elapsed / popInDuration;
-            SetTextAlpha(Mathf.Lerp(0f, 1f, progress));
-            feedbackText.transform.localScale = Vector3.Lerp(startScale, popScale, progress);
+
+            SetAlpha(targetText, initialColor, Mathf.Lerp(0f, 1f, progress));
+            targetText.transform.localScale = Vector3.Lerp(startScale, popScale, progress);
             yield return null;
         }
 
@@ -94,13 +104,13 @@ public class TimerFeedbackUI : MonoBehaviour
         while (elapsed < settleDuration)
         {
             elapsed += Time.unscaledDeltaTime;
-            feedbackText.transform.localScale = Vector3.Lerp(popScale, normalScale, elapsed / settleDuration);
+            targetText.transform.localScale = Vector3.Lerp(popScale, normalScale, elapsed / settleDuration);
             yield return null;
         }
 
         // Ensure scale and alpha are set
-        feedbackText.transform.localScale = normalScale;
-        SetTextAlpha(1f);
+        targetText.transform.localScale = normalScale;
+        SetAlpha(targetText, initialColor, 1f);
         #endregion
 
         #region Hold On Screen
@@ -109,25 +119,30 @@ public class TimerFeedbackUI : MonoBehaviour
 
         #region Smooth Fade Out
         elapsed = 0f;
-        while (elapsed < fadeDuration)
+        while (elapsed < fadeOutDuration)
         {
             elapsed += Time.unscaledDeltaTime;
-            float alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
-            SetTextAlpha(alpha);
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / fadeOutDuration);
+            SetAlpha(targetText, initialColor, alpha);
             yield return null;
         }
 
         // Reset state for next trigger
-        SetTextAlpha(0f);
-        feedbackText.transform.localScale = startScale;
+        ResetText(targetText);
         #endregion
     }
 
-    private void SetTextAlpha(float alpha)
+    private void SetAlpha(TextMeshProUGUI targetText, Color baseColor, float alpha)
     {
-        Color color = feedbackText.color;
+        Color color = targetText.color;
         color.a = alpha;
-        feedbackText.color = color;
+        targetText.color = color;
+    }
+
+    private void ResetText(TextMeshProUGUI targetText)
+    {
+        SetAlpha(targetText, targetText.color, 0f);
+        targetText.transform.localScale = startScale;
     }
     #endregion
 }

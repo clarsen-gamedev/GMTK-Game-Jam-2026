@@ -20,10 +20,12 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Over Settings")]
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private TextMeshProUGUI finalTimeText;
     public bool IsGameOver => isGameOver;
 
     private bool isTimerRunning = true;
     private bool isGameOver = false;
+    private float totalTimePlayed = 0f;
     #endregion
 
     #region Functions
@@ -51,6 +53,9 @@ public class GameManager : MonoBehaviour
 
         #region Countdown Timer Logic
         if (!isTimerRunning) return;
+
+        // Track total survival time
+        totalTimePlayed += Time.deltaTime;
 
         if (timeRemaining > 0)
         {
@@ -80,6 +85,14 @@ public class GameManager : MonoBehaviour
     private void OnTimeExpired()
     {
         isGameOver = true;
+
+        //Display formatted total play time on Game Over screen
+        if (finalTimeText != null)
+        {
+            int minutes = Mathf.FloorToInt(totalTimePlayed / 60);
+            int seconds = Mathf.FloorToInt(totalTimePlayed % 60);
+            finalTimeText.text = string.Format("Total Time Survived: {0:00}:{1:00}", minutes, seconds);
+        }
 
         if (gameOverPanel != null)
         {
