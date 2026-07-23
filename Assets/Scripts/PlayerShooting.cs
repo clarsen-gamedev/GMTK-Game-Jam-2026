@@ -10,19 +10,20 @@ using UnityEngine.Assertions.Must;
 
 public class PlayerShooting : MonoBehaviour
 {
-    #region Public and Serialized Variables
+    #region Variables
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint;
     [SerializeField] private float fireRate = 0.2f;
-    #endregion
 
-    #region Private Variables
     private float nextFireTime;
     #endregion
 
     #region Functions
     private void Update()
     {
+        // Ignore shooting inputs when game is paused
+        if (PauseManager.IsPaused) return;
+
         // Read arrow inputs
         float shootX = 0f;
         float shootY = 0f;

@@ -98,6 +98,12 @@ public class GameManager : MonoBehaviour
     {
         timeRemaining += amount;
         timeRemaining = Mathf.Max(0f, timeRemaining);
+
+        // Call feedback UI script
+        if (TimerFeedbackUI.Instance != null && amount != 0f)
+        {
+            TimerFeedbackUI.Instance.ShowFeedback(amount);
+        }
     }
     #endregion
 }

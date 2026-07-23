@@ -11,9 +11,7 @@ public class PlayerController : MonoBehaviour
 {
     #region Public and Serialized Variables
     [SerializeField] private float moveSpeed = 8f;
-    #endregion
 
-    #region Private Variables
     private Rigidbody2D rb;
     private Vector2 moveInput;
     #endregion
@@ -27,6 +25,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if(PauseManager.IsPaused)
+        {
+            moveInput = Vector2.zero;
+            return;
+        }
+
         float moveX = 0f;
         float moveY = 0f;
 
