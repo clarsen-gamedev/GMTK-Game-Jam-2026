@@ -10,12 +10,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
 {
-    #region Public and Serialized Variables
+    #region Variables
     [SerializeField] private float speed = 15f;
     [SerializeField] private float lifeTime = 3f;
-    #endregion
+    [SerializeField] private float damage = 10f;
 
-    #region Private Variables
     private Rigidbody2D rb;
     #endregion
 
@@ -35,6 +34,14 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")) return; // Do not collide with the player
+
+        // Check if bullet hit an enemy
+        Enemy enemy = collision.GetComponent<Enemy>();
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damage);
+        }
+
         Destroy(gameObject);
     }
     #endregion
