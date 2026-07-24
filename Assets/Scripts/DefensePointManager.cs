@@ -94,17 +94,28 @@ public class DefensePointManager : MonoBehaviour
 
     private void UpdateDefensePointColors()
     {
-        if (!enableDebugColors || defensePoints == null) return;
+        if (defensePoints == null) return;
 
         for (int i = 0; i < defensePoints.Length; i++)
         {
             if (defensePoints[i] == null) continue;
 
-            // Search the point or it's child objects for a SpriteRenderer
-            SpriteRenderer sr = defensePoints[i].GetComponentInChildren<SpriteRenderer>();
-            if (sr != null)
+            // Handle main sprite debug colouring
+            if (enableDebugColors)
             {
-                sr.color = (i == currentPointIndex) ? activeColor : inactiveColor;
+                // Search the point or it's child objects for a SpriteRenderer
+                SpriteRenderer sr = defensePoints[i].GetComponentInChildren<SpriteRenderer>();
+                if (sr != null)
+                {
+                    sr.color = (i == currentPointIndex) ? activeColor : inactiveColor;
+                }
+            }
+
+            // Enable/Disable the Radar Dot clild object so only the active point shows on the radar
+            Transform radarDot = defensePoints[i].Find("RadarSprite");
+            if (radarDot != null)
+            {
+                radarDot.gameObject.SetActive(i == currentPointIndex);
             }
         }
     }
