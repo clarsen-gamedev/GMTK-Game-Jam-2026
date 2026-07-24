@@ -43,13 +43,13 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        #region Game Over Logic
-        if (isGameOver)
-        {
-            if (Input.GetKeyDown(KeyCode.R)) RestartGame();
-            return;
-        }
-        #endregion
+        //#region Game Over Logic
+        //if (isGameOver)
+        //{
+        //    if (Input.GetKeyDown(KeyCode.R)) RestartGame();
+        //    return;
+        //}
+        //#endregion
 
         #region Countdown Timer Logic
         if (!isTimerRunning) return;
