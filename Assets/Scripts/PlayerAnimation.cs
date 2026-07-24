@@ -44,8 +44,19 @@ public class PlayerAnimation : MonoBehaviour
 
         if (isAttacking)
         {
+            // PRIORITY CHECK: If shooting diagonally (both X and Y are non-zero)
+            if (attackInput.x != 0f && attackInput.y != 0f)
+            {
+                attackInput.y = 0f;
+            }
+
             attackInput.Normalize();
             lastFacingDirection = attackInput;  // Shooting overrides facing direction so player faces their aim direction
+        }
+        else if (moveInput.sqrMagnitude > 0)
+        {
+            // Only update facing direction from movement when NOT attacking
+            lastFacingDirection = moveInput;
         }
 
         // Update animator parameters
