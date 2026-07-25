@@ -60,7 +60,7 @@ public class AudioManager : MonoBehaviour
     public void PlayDefenseSwitchSound() => PlayOneShot(defenseSwitchClip);
 
     // Combat Sounds
-    public void PlayPlayerShootSound() => PlayOneShot(playerShootClip);
+    public void PlayPlayerShootSound() => PlayOneShot(playerShootClip, 0.2F);
     public void PlayEnemyHitSound() => PlayOneShot(enemyHitClip);
     public void PlayEnemyDefeatedSound() => PlayOneShot(enemyDefeatClip);
     #endregion
