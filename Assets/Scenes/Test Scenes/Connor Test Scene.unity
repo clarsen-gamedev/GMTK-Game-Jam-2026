@@ -3641,6 +3641,8 @@ MonoBehaviour:
   - {fileID: 1431313860}
   baseSpawnInterval: 2
   minSpawnInterval: 0.1
+  minKillsToIncrease: 10
+  maxKillsToIncrease: 30
 --- !u!114 &1468195833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3659,7 +3661,7 @@ MonoBehaviour:
   defenseNotificationText: {fileID: 1478677876}
   spawnNotificationText: {fileID: 1921622845}
   popInDuration: 0.15
-  displayDuration: 0.8
+  displayDuration: 1.5
   fadeOutDuration: 0.4
   startScale: {x: 0.3, y: 0.3, z: 1}
   popScale: {x: 1.3, y: 1.3, z: 1}

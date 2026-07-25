@@ -19,8 +19,14 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float baseSpawnInterval = 2f;
     [SerializeField] private float minSpawnInterval = 0.1f;
 
-    // Shared accross all spawners (how many times spawning has been scaled)
+    [Header("Kill Scale Settings")]
+    [SerializeField] private int minKillsToIncrease = 10;
+    [SerializeField] private int maxKillsToIncrease = 30;
+
+    // Shared accross all spawners
     private static int globalDifficultyTier = 0;
+    private static int totalKillsSinceLastIncrease = 0;
+    private static int currentKillTarget = -1;
 
     // Calculate current inverval based on base rate and global difficulty tier
     private float currentInterval => Mathf.Max(minSpawnInterval, baseSpawnInterval - (globalDifficultyTier * 0.15f));
@@ -32,6 +38,10 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         nextSpawnTime = Time.time + currentInterval;
+        if (currentKillTarget == -1)
+        {
+            RandomizeKillTarget();
+        }
     }
 
     private void Update()
@@ -53,6 +63,31 @@ public class EnemySpawner : MonoBehaviour
         Instantiate(prefabToSpawn, chosenSpawn.position, Quaternion.identity);
     }
 
+    // Call this whenever ANY enemy is defeated
+    public static void RegisterEnemyKill(int minKills = 10, int maxKills = 30)
+    {
+        totalKillsSinceLastIncrease++;
+
+        // Ensure we have a target set
+        if (currentKillTarget <= 0)
+        {
+            currentKillTarget = Random.Range(minKills, maxKills + 1);
+        }
+
+        // Check if we hit or exceeded the random target
+        if (totalKillsSinceLastIncrease >= currentKillTarget)
+        {
+            totalKillsSinceLastIncrease = 0;
+            IncreaseGlobalSpawnRate();
+            currentKillTarget = Random.Range(minKills, maxKills + 1);
+        }
+    }
+
+    private static void RandomizeKillTarget()
+    {
+        currentKillTarget = Random.Range(10, 31);
+    }
+
     // Call this whenever the spawn rate should increase
     public static void IncreaseGlobalSpawnRate()
     {
@@ -70,6 +105,8 @@ public class EnemySpawner : MonoBehaviour
     public static void ResetDifficulty()
     {
         globalDifficultyTier = 0;
+        totalKillsSinceLastIncrease = 0;
+        currentKillTarget = -1;
     }
     #endregion
 }

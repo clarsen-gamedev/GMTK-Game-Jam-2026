@@ -136,6 +136,9 @@ public class Enemy : MonoBehaviour
             {
                 GameManager.Instance.AddTime(timeAddedOnKill);
             }
+
+            EnemySpawner.RegisterEnemyKill();
+
             Destroy(gameObject);
         }
         else
@@ -179,7 +182,7 @@ public class Enemy : MonoBehaviour
         bool validImpact = false;
 
         // Player-chasers only explode on player
-        if (targetType == TargetType.PLAYER && isPlayer)
+        if (targetType == TargetType.PLAYER && isPlayer || isDefensePoint)
         {
             validImpact = true;
         }
