@@ -9,11 +9,18 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    #region Public and Serialized Variables
+    #region Variables
+    [Header("Player Variables")]
     [SerializeField] private float moveSpeed = 8f;
+
+    [Header("Map Boundaries")]
+    [SerializeField] private SpriteRenderer mapSpriteRenderer;
+    [SerializeField] private float padding = 0.5f;
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
+    private Vector2 minBounds;
+    private Vector2 maxBounds;
     #endregion
 
     #region Functions
@@ -21,6 +28,18 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
+    }
+
+    private void Start()
+    {
+        // Calculate map boundaries once at start based on the SpriteRenderer bounds
+        if (mapSpriteRenderer != null)
+        {
+            Bounds mapBounds = mapSpriteRenderer.bounds;
+
+            minBounds = mapBounds.min;
+            maxBounds = mapBounds.max;
+        }
     }
 
     private void Update()
@@ -44,7 +63,17 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
+        // Calculate raw target position
+        Vector2 targetPosition = rb.position + moveInput * moveSpeed * Time.fixedDeltaTime;
+
+        // Clamp target position inside the map bounds (with padding)
+        if (mapSpriteRenderer != null)
+        {
+            targetPosition.x = Mathf.Clamp(targetPosition.x, minBounds.x + padding, maxBounds.x - padding);
+            targetPosition.y = Mathf.Clamp(targetPosition.y, minBounds.y + padding, maxBounds.y - padding);
+        }
+
+        rb.MovePosition(targetPosition);
     }
     #endregion
 }

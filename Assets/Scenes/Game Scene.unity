@@ -2744,6 +2744,7 @@ MonoBehaviour:
   target: {fileID: 280846785}
   smoothSpeed: 3
   offset: {x: 0, y: 0, z: -10}
+  mapSpriteRenderer: {fileID: 1368367032}
 --- !u!1 &1097434571
 GameObject:
   m_ObjectHideFlags: 0
@@ -6283,6 +6284,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 167939790254567995, guid: aa1a66d014d8720438b430bda00bc9b7, type: 3}
+      propertyPath: mapSpriteRenderer
+      value: 
+      objectReference: {fileID: 1368367032}
     - target: {fileID: 523463663345747989, guid: aa1a66d014d8720438b430bda00bc9b7, type: 3}
       propertyPath: bulletPrefab
       value: 
