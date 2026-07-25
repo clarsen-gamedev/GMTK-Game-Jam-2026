@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5972036494485037065}
   - component: {fileID: 4688662569173311289}
   - component: {fileID: 393326812376383919}
+  - component: {fileID: 7572988464894834075}
   m_Layer: 6
   m_Name: Bullet
   m_TagString: Bullet
@@ -112,6 +113,22 @@ MonoBehaviour:
   speed: 15
   lifeTime: 3
   damage: 1
+--- !u!111 &7572988464894834075
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745272949076870093}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 7f1276bdf861e5447b2b42f31af83f99, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 7f1276bdf861e5447b2b42f31af83f99, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &5023094620596534958
 GameObject:
   m_ObjectHideFlags: 0
