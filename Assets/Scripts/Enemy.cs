@@ -210,5 +210,10 @@ public class Enemy : MonoBehaviour
             DefensePointManager.Instance.UnregisterDefenseEnemy(this);
         }
     }
+
+    public float GetTimeLostOnImpact()
+    {
+        return timeLostOnImpact;
+    }
     #endregion
 }

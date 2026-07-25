@@ -5,6 +5,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Json;
 using Unity.Loading;
 using UnityEngine;
 
@@ -82,6 +83,7 @@ public class DefensePointManager : MonoBehaviour
 
         // Refresh sprite colors to reflect the new active target
         UpdateDefensePointColors();
+        ClearEnemiesAtActivePoint(newTarget);
 
         // Show Pop-Up Notification on Canvas
         if (TimerFeedbackUI.Instance != null && newTarget != null)
@@ -90,6 +92,31 @@ public class DefensePointManager : MonoBehaviour
         }
 
         Debug.Log($"Defense Point Swapped! New Target: {newTarget.gameObject.name}");
+    }
+
+    // Call this whenever the active defense point changes
+    private void ClearEnemiesAtActivePoint(Transform activePoint)
+    {
+        float pointRadius = 1.5f;   // Match defense point collider size
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(activePoint.position, pointRadius);
+
+        foreach (Collider2D hit in hitColliders)
+        {
+            if (hit.CompareTag("Enemy"))
+            {
+                Enemy enemy = hit.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    // Trigger penalty directly
+                    if (GameManager.Instance != null)
+                    {
+                        GameManager.Instance.AddTime(-enemy.GetTimeLostOnImpact());
+                    }
+
+                    Destroy(enemy.gameObject);
+                }
+            }
+        }
     }
 
     private void UpdateDefensePointColors()
