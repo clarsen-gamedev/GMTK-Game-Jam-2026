@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
         {
             int minutes = Mathf.FloorToInt(totalTimePlayed / 60);
             int seconds = Mathf.FloorToInt(totalTimePlayed % 60);
-            finalTimeText.text = string.Format("Total Time Survived: {0:00}:{1:00}", minutes, seconds);
+            finalTimeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
 
         if (gameOverPanel != null)
@@ -99,12 +99,16 @@ public class GameManager : MonoBehaviour
             gameOverPanel.SetActive(true);
         }
 
+        SetAlpha(timerText, timerText.color, 0f);
+
         Time.timeScale = 0f;
     }
 
     public void RestartGame()
     {
         Time.timeScale = 1f;
+        EnemySpawner.ResetDifficulty();
+        SetAlpha(timerText, timerText.color, 1f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -118,6 +122,13 @@ public class GameManager : MonoBehaviour
         {
             TimerFeedbackUI.Instance.ShowTimerFeedback(amount);
         }
+    }
+
+    public void SetAlpha(TextMeshProUGUI targetText, Color baseColor, float alpha)
+    {
+        Color color = targetText.color;
+        color.a = alpha;
+        targetText.color = color;
     }
     #endregion
 }
