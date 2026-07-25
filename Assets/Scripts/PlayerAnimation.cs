@@ -20,6 +20,9 @@ public class PlayerAnimation : MonoBehaviour
     #region Functions
     private void Update()
     {
+        // Do nothing if the game is paused or at a Game Over screen
+        if (Time.timeScale == 0f) return;
+
         // Gather movement inputs
         moveInput = Vector2.zero;
         if (Input.GetKey(KeyCode.W)) moveInput.y += 1f;
