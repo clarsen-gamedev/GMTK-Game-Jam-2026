@@ -43,7 +43,7 @@ public class TitleScreenManager : MonoBehaviour
     public void BeginGame()
     {
         GetComponent<AudioSource>().Play();     // Play the button click sound effect
-        SceneManager.LoadScene("SceneName");    // Load the first level of the game (Replace "SceneName" with the name of the scene to load)
+        SceneManager.LoadScene("Connor Test Scene");    // Load the first level of the game (Replace "SceneName" with the name of the scene to load)
     }
 
     // Credits Button
