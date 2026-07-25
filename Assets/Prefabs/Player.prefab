@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6800363804856127975}
   - component: {fileID: 167939790254567995}
   - component: {fileID: 523463663345747989}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ Transform:
   - {fileID: 6954721646120677287}
   - {fileID: 1746680688818330000}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &9113344142736682708
 BoxCollider2D:
