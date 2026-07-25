@@ -26,12 +26,16 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Color flashColor = Color.red;
     [SerializeField] private float flashDuration = 0.1f;
 
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+
     private Transform targetTransform;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
     private Coroutine flashRoutine;
     private float currentHealth;
+    private Vector3 lastPosition;
     #endregion
 
     #region Functions
@@ -39,6 +43,8 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
+
+        if (animator == null) animator = GetComponentInChildren<Animator>();
 
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (spriteRenderer != null)
@@ -50,6 +56,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+        lastPosition = transform.position;
         FindTarget();
     }
 
@@ -73,9 +80,6 @@ public class Enemy : MonoBehaviour
                 targetTransform = DefensePointManager.Instance.GetCurrentDefensePoint();
                 DefensePointManager.Instance.RegisterDefenseEnemy(this);
             }
-
-            //GameObject defenseObj = GameObject.FindGameObjectWithTag("DefensePoint");
-            //if (defenseObj != null) targetTransform = defenseObj.transform;
         }
     }
 
@@ -87,9 +91,38 @@ public class Enemy : MonoBehaviour
         Vector2 direction = ((Vector2)targetTransform.position - rb.position).normalized;
         rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
 
-        // Rotate sprite to face movement direction
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-        rb.rotation = angle;
+        //// Rotate sprite to face movement direction
+        //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        //rb.rotation = angle;
+
+        UpdateAnimation();
+    }
+
+    private void UpdateAnimation()
+    {
+        if (animator == null) return;
+
+        transform.rotation = Quaternion.identity;
+        Vector2 movementVector = Vector2.zero;
+
+        // Calculate direction vector from physics velocity or position change
+        if (rb != null && rb.bodyType != RigidbodyType2D.Static && rb.velocity.sqrMagnitude > 0.01f)
+        {
+            movementVector = rb.velocity.normalized;
+        }
+        else
+        {
+            Vector3 displacement = transform.position - lastPosition;
+            if (displacement.sqrMagnitude > 0.0001f)
+            {
+                movementVector = new Vector2(displacement.x, displacement.y).normalized;
+            }
+            lastPosition = transform.position;
+        }
+
+        // Pass coordinates directly to the EnemyAnimatorController blend tree
+        animator.SetFloat("MoveX", movementVector.x);
+        animator.SetFloat("MoveY", movementVector.y);
     }
 
     public void TakeDamage(float damageAmount)
@@ -139,7 +172,9 @@ public class Enemy : MonoBehaviour
         if (collision.CompareTag("Bullet")) return;
 
         bool isPlayer = collision.CompareTag("Player");
-        bool isDefensePoint = collision.CompareTag("DefensePoint");
+        bool isDefensePoint = collision.CompareTag("DefensePoint") &&
+                              (DefensePointManager.Instance != null &&
+                              DefensePointManager.Instance.IsActiveDefensePoint(collision.transform));
 
         bool validImpact = false;
 

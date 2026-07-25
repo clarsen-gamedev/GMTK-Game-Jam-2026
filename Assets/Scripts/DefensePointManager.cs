@@ -126,6 +126,12 @@ public class DefensePointManager : MonoBehaviour
         return defensePoints[currentPointIndex];
     }
 
+    public bool IsActiveDefensePoint(Transform pointTransform)
+    {
+        if (defensePoints == null || defensePoints.Length == 0) return false;
+        return defensePoints[currentPointIndex] == pointTransform;
+    }
+
     public void RegisterDefenseEnemy(Enemy enemy)
     {
         if (!activeDefenseEnemies.Contains(enemy))

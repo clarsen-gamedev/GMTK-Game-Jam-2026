@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4870794464828579874}
   - component: {fileID: 4981244721777453364}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: RadarSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9062344976865493983}
   - component: {fileID: 8722552611877202037}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6930455243778464453}
   - component: {fileID: 4869187488207663780}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Defense Point
   m_TagString: DefensePoint
   m_Icon: {fileID: 0}
