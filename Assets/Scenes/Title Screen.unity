@@ -2014,7 +2014,7 @@ MonoBehaviour:
   titleUI: {fileID: 1324136106}
   instructionsUI: {fileID: 549352403}
   creditsUI: {fileID: 1160096827}
-  menuSelect: {fileID: 8300000, guid: b4b22c6a15a4f9f41b7e1a46990a28ad, type: 3}
+  menuSelect: {fileID: 8300000, guid: 27c150cb236873e45b4cccbff85fb4a0, type: 3}
   currentScreen: 0
 --- !u!4 &1403804357
 Transform:

@@ -51,6 +51,9 @@ public class PlayerShooting : MonoBehaviour
 
         // Create bullet, it will now begin it's mission to slay it's enemies
         Instantiate(bulletPrefab, firePoint.position, rotation);
+
+        // Play shooting sound
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayPlayerShootSound();
     }
     #endregion
 }

@@ -109,6 +109,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         EnemySpawner.ResetDifficulty();
         SetAlpha(timerText, timerText.color, 1f);
+        AudioManager.Instance.PlayButtonSound();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

@@ -73,6 +73,13 @@ public class TimerFeedbackUI : MonoBehaviour
         }
 
         timerRoutine = StartCoroutine(AnimateText(timerFeedbackText));
+
+        // Audio
+        if (AudioManager.Instance != null)
+        {
+            if (amount > 0) AudioManager.Instance.PlayTimerGainSound();
+            else AudioManager.Instance.PlayTimerLossSound();
+        }
     }
     #endregion
 
@@ -81,6 +88,9 @@ public class TimerFeedbackUI : MonoBehaviour
     {
         if (defenseNotificationText == null) return;
         if (defenseRoutine != null) StopCoroutine(defenseRoutine);
+
+        // Play defense switch sound
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayDefenseSwitchSound();
 
         defenseNotificationText.text = message;
         defenseRoutine = StartCoroutine(AnimateText(defenseNotificationText));
@@ -94,6 +104,9 @@ public class TimerFeedbackUI : MonoBehaviour
 
         if (targetText == null) return;
         if (spawnRoutine != null) StopCoroutine(spawnRoutine);
+
+        // Play spawn rate increase sound
+        if (AudioManager.Instance != null) AudioManager.Instance.PlaySpawnRateIncreaseSound();
 
         targetText.text = message;
         spawnRoutine = StartCoroutine(AnimateText(targetText));

@@ -132,19 +132,21 @@ public class Enemy : MonoBehaviour
         if (currentHealth <= 0f)
         {
             // Enemy defeated, add time to timer
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.AddTime(timeAddedOnKill);
-            }
+            if (GameManager.Instance != null) GameManager.Instance.AddTime(timeAddedOnKill);
+
+            // Play enemy defeated sound
+            if (AudioManager.Instance != null) AudioManager.Instance.PlayEnemyDefeatedSound();
 
             EnemySpawner.RegisterEnemyKill();
-
             Destroy(gameObject);
         }
         else
         {
             // Enemy survived the hit -> Flash red!
             TriggerHitFlash();
+
+            // Play enemy defeated sound
+            if (AudioManager.Instance != null) AudioManager.Instance.PlayEnemyHitSound();
         }
     }
 

@@ -63,6 +63,7 @@ public class PauseManager : MonoBehaviour
         IsPaused = true;
         Time.timeScale = 0f;
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(true);
+        AudioManager.Instance.PlayButtonSound();
     }
 
     public void ResumeGame()
@@ -71,6 +72,7 @@ public class PauseManager : MonoBehaviour
         Time.timeScale = 1f;
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
         if (confirmResetPanel != null) confirmResetPanel.SetActive(false);
+        AudioManager.Instance.PlayButtonSound();
     }
     #endregion
 
@@ -79,12 +81,14 @@ public class PauseManager : MonoBehaviour
     {
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
         if (confirmResetPanel != null) confirmResetPanel.SetActive(true);
+        AudioManager.Instance.PlayButtonSound();
     }
 
     public void CancelResetConfirmation()
     {
         if (confirmResetPanel != null) confirmResetPanel.SetActive(false);
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(true); ;
+        AudioManager.Instance.PlayButtonSound();
     }
 
     public void ConfirmReset()
@@ -99,6 +103,7 @@ public class PauseManager : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
+        AudioManager.Instance.PlayButtonSound();
         SceneManager.LoadScene(mainMenuSceneName);
     }
     #endregion
