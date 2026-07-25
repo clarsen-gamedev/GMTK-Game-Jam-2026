@@ -16,18 +16,30 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Spawn Settings")]
     [SerializeField] private Transform[] spawnPoints;
-    [SerializeField] private float spawnInterval = 2f;
+    [SerializeField] private float baseSpawnInterval = 2f;
+    [SerializeField] private float minSpawnInterval = 0.1f;
+
+    // Shared accross all spawners (how many times spawning has been scaled)
+    private static int globalDifficultyTier = 0;
+
+    // Calculate current inverval based on base rate and global difficulty tier
+    private float currentInterval => Mathf.Max(minSpawnInterval, baseSpawnInterval - (globalDifficultyTier * 0.15f));
 
     private float nextSpawnTime;
     #endregion
 
     #region Functions
+    private void Start()
+    {
+        nextSpawnTime = Time.time + currentInterval;
+    }
+
     private void Update()
     {
         if (Time.time >= nextSpawnTime)
         {
             SpawnEnemy();
-            nextSpawnTime = Time.time + spawnInterval;
+            nextSpawnTime = Time.time + currentInterval;
         }
     }
 
@@ -39,6 +51,19 @@ public class EnemySpawner : MonoBehaviour
         GameObject prefabToSpawn = (Random.value > 0.75f) ? playerChaserPrefab : defenseChaserPrefab;
 
         Instantiate(prefabToSpawn, chosenSpawn.position, Quaternion.identity);
+    }
+
+    // Call this whenever the spawn rate should increase
+    public static void IncreaseGlobalSpawnRate()
+    {
+        globalDifficultyTier++;
+        Debug.Log("Spawn rate increased to {currentInterval}!");
+    }
+
+    // Call this when restarting the game so static variables reset
+    public static void ResetDifficulty()
+    {
+        globalDifficultyTier = 0;
     }
     #endregion
 }

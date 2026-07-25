@@ -92,6 +92,9 @@ public class DefensePointManager : MonoBehaviour
         }
 
         Debug.Log($"Defense Point Swapped! New Target: {newTarget.gameObject.name}");
+
+        // DEBUG: Increase enemy spawn speed across ALL spawner instances
+        EnemySpawner.IncreaseGlobalSpawnRate();
     }
 
     // Call this whenever the active defense point changes
