@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4870794464828579874}
   - component: {fileID: 4981244721777453364}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: RadarSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 140694597228829188}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 15, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6930455243778464453}
