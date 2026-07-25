@@ -90,6 +90,7 @@ public class PauseManager : MonoBehaviour
     public void ConfirmReset()
     {
         Time.timeScale = 1f;
+        EnemySpawner.ResetDifficulty();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     #endregion

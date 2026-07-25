@@ -22,6 +22,9 @@ public class TimerFeedbackUI : MonoBehaviour
     [Header("Defense Point Notification UI")]
     [SerializeField] private TextMeshProUGUI defenseNotificationText;
 
+    [Header("Spawn Rate Notification UI")]
+    [SerializeField] private TextMeshProUGUI spawnNotificationText;
+
     [Header("Animation Settings")]
     [SerializeField] private float popInDuration = 0.15f;
     [SerializeField] private float displayDuration = 0.8f;
@@ -34,6 +37,7 @@ public class TimerFeedbackUI : MonoBehaviour
 
     private Coroutine timerRoutine;
     private Coroutine defenseRoutine;
+    private Coroutine spawnRoutine;
     #endregion
 
     #region Functions
@@ -45,11 +49,12 @@ public class TimerFeedbackUI : MonoBehaviour
         // Hide all feedback text at the start
         if (timerFeedbackText != null) ResetText(timerFeedbackText);
         if (defenseNotificationText != null) ResetText(defenseNotificationText);
+        if (spawnNotificationText != null) ResetText(spawnNotificationText);
     }
 
     #region Timer Change Feedback
     // Displays floating text showing time added or lost
-    public void ShowFeedback(float amount)
+    public void ShowTimerFeedback(float amount)
     {
         if (timerFeedbackText == null || amount == 0f) return;
 
@@ -79,7 +84,20 @@ public class TimerFeedbackUI : MonoBehaviour
 
         defenseNotificationText.text = message;
         defenseRoutine = StartCoroutine(AnimateText(defenseNotificationText));
-    }    
+    }
+    #endregion
+
+    #region Spawn Rate Notification
+    public void ShowSpawnRateNotification(string message)
+    {
+        TextMeshProUGUI targetText = (spawnNotificationText != null) ? spawnNotificationText : defenseNotificationText;
+
+        if (targetText == null) return;
+        if (spawnRoutine != null) StopCoroutine(spawnRoutine);
+
+        targetText.text = message;
+        spawnRoutine = StartCoroutine(AnimateText(targetText));
+    }
     #endregion
 
     private IEnumerator AnimateText(TextMeshProUGUI targetText)

@@ -58,6 +58,12 @@ public class EnemySpawner : MonoBehaviour
     {
         globalDifficultyTier++;
         Debug.Log("Spawn rate increased to {currentInterval}!");
+
+        // Trigger UI Notification
+        if (TimerFeedbackUI.Instance != null)
+        {
+            TimerFeedbackUI.Instance.ShowSpawnRateNotification("You've angered the horde!\nSpawn rates increased!");
+        }
     }
 
     // Call this when restarting the game so static variables reset
