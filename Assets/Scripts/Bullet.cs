@@ -35,6 +35,13 @@ public class Bullet : MonoBehaviour
     {
         if (collision.CompareTag("Player")) return; // Do not collide with the player
 
+        // If the bullet hits a defense point, destroy the bullet immediately
+        if (collision.CompareTag("DefensePoint"))
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         // Check if bullet hit an enemy
         Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy != null)
