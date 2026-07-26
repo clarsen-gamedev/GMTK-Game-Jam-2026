@@ -17,4 +17,4 @@ MonoBehaviour:
   worldPrefab: {fileID: 8206216835632435533, guid: 50f26d2b08ada1146bcab8f6b3176dd1, type: 3}
   type: 0
   value: 10
-  pickupSound: {fileID: 8300000, guid: 27c150cb236873e45b4cccbff85fb4a0, type: 3}
+  pickupSound: {fileID: 8300000, guid: bf4d7e5591abfd34aa226fbee4db797b, type: 3}
