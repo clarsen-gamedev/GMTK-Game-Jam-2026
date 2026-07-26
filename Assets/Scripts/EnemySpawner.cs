@@ -5,6 +5,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -97,7 +98,18 @@ public class EnemySpawner : MonoBehaviour
         // Trigger UI Notification
         if (TimerFeedbackUI.Instance != null)
         {
-            TimerFeedbackUI.Instance.ShowSpawnRateNotification("You've angered the horde!\nSpawn rates increased!");
+            TimerFeedbackUI.Instance.ShowSpawnRateNotification("You've angered the horde!\nSpawn rates increased!", Color.red);
+        }
+    }
+
+    // Call this whenever the spawn rate should decrease
+    public static void DecreaseGlobalSpawnRate()
+    {
+        globalDifficultyTier = Mathf.Max(0, globalDifficultyTier - 1);
+
+        if (TimerFeedbackUI.Instance != null)
+        {
+            TimerFeedbackUI.Instance.ShowSpawnRateNotification("Your power overwhelms them!\nSpawn rates decreased!", Color.blue);
         }
     }
 

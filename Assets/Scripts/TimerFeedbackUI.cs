@@ -98,7 +98,7 @@ public class TimerFeedbackUI : MonoBehaviour
     #endregion
 
     #region Spawn Rate Notification
-    public void ShowSpawnRateNotification(string message)
+    public void ShowSpawnRateNotification(string message, Color color)
     {
         TextMeshProUGUI targetText = (spawnNotificationText != null) ? spawnNotificationText : defenseNotificationText;
 
@@ -108,6 +108,7 @@ public class TimerFeedbackUI : MonoBehaviour
         // Play spawn rate increase sound
         if (AudioManager.Instance != null) AudioManager.Instance.PlaySpawnRateIncreaseSound();
 
+        targetText.color = color;
         targetText.text = message;
         spawnRoutine = StartCoroutine(AnimateText(targetText));
     }

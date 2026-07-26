@@ -5,6 +5,7 @@ using UnityEngine;
 public enum PowerupType
 {
     AddTime,
+    DecreaseDifficulty,
     None
 }
 
@@ -13,13 +14,13 @@ public class PowerupData : ScriptableObject
 {
     #region Variables
     [Header("Display Info")]
-    public string powerupName = "Time Boost";
+    public string powerupName;
     public Sprite icon;
     public GameObject worldPrefab; // Visual object dropped on the ground
 
     [Header("Powerup Logic")]
-    public PowerupType type = PowerupType.AddTime;
-    public float value = 30f; // Amount (e.g., 30 seconds)
+    public PowerupType type;
+    public float value;         // Amount (e.g., 30 seconds)
 
     [Header("Audio")]
     public AudioClip pickupSound;
@@ -43,6 +44,10 @@ public class PowerupData : ScriptableObject
                 {
                     TimerFeedbackUI.Instance.ShowTimerFeedback(value);
                 }
+                break;
+
+            case PowerupType.DecreaseDifficulty:
+                EnemySpawner.DecreaseGlobalSpawnRate();
                 break;
 
                 // Future powerups added as new cases here

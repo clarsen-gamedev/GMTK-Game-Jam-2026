@@ -134,6 +134,8 @@ MonoBehaviour:
   dropList:
   - powerup: {fileID: 11400000, guid: bb988c8d008c7e8468cf7e5bebf7e5a4, type: 2}
     dropChance: 5
+  - powerup: {fileID: 11400000, guid: 73d52f6a375e09d45a4a0963a282a6b5, type: 2}
+    dropChance: 1
 --- !u!1 &2303034678397985830
 GameObject:
   m_ObjectHideFlags: 0
