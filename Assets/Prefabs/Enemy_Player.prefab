@@ -304,7 +304,7 @@ MonoBehaviour:
   targetType: 0
   moveSpeed: 3.5
   maxHealth: 3
-  timeAddedOnKill: 3
+  timeAddedOnKill: 2
   timeLostOnImpact: 5
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.1
@@ -323,6 +323,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropList:
   - powerup: {fileID: 11400000, guid: bb988c8d008c7e8468cf7e5bebf7e5a4, type: 2}
-    dropChance: 5
+    dropChance: 10
   - powerup: {fileID: 11400000, guid: 73d52f6a375e09d45a4a0963a282a6b5, type: 2}
-    dropChance: 1
+    dropChance: 5
