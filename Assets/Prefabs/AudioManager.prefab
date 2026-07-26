@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1146452951881418115
+--- !u!1 &6018959103104439177
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3282880612008608964}
-  - component: {fileID: 4585898282492630781}
-  - component: {fileID: 498237832241343806}
+  - component: {fileID: 669565355597550049}
+  - component: {fileID: 7937660661080527809}
+  - component: {fileID: 5070548149024189726}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -18,28 +18,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3282880612008608964
+--- !u!4 &669565355597550049
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1146452951881418115}
+  m_GameObject: {fileID: 6018959103104439177}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &4585898282492630781
+--- !u!82 &7937660661080527809
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1146452951881418115}
+  m_GameObject: {fileID: 6018959103104439177}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -129,20 +129,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &498237832241343806
+--- !u!114 &5070548149024189726
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1146452951881418115}
+  m_GameObject: {fileID: 6018959103104439177}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1167060ab8a4e94abb4f2b98b4a75fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonClip: {fileID: 8300000, guid: 27c150cb236873e45b4cccbff85fb4a0, type: 3}
+  sfxSource: {fileID: 0}
+  musicSource: {fileID: 0}
+  titleTheme: {fileID: 0}
+  mainGameTheme: {fileID: 0}
+  gameOverTheme: {fileID: 0}
+  buttonClickClip: {fileID: 8300000, guid: 27c150cb236873e45b4cccbff85fb4a0, type: 3}
   spawnRateIncreaseClip: {fileID: 8300000, guid: b05eaba24cc4f1748a9c7483cee2cbac, type: 3}
   timerGainClip: {fileID: 8300000, guid: c352e3a383a747944976cd10753a4eac, type: 3}
   timerLossClip: {fileID: 8300000, guid: 06660c0672be8024194e13cdf6ab8f12, type: 3}
-  defenseSwitchClip: {fileID: 0}
+  defenseSwitchClip: {fileID: 8300000, guid: 2935ebeecaef6f34f8f792f06b2b7746, type: 3}
+  playerShootClip: {fileID: 8300000, guid: 47cf38213699df8468f483eaa91b130e, type: 3}
+  enemyHitClip: {fileID: 8300000, guid: a29fb44fd4a7fcf4d96ac669d37b981a, type: 3}
+  enemyDefeatClip: {fileID: 8300000, guid: 5bb3dcca94a51b34bac548ba7a34e437, type: 3}
