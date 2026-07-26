@@ -98,6 +98,7 @@ public class EnemySpawner : MonoBehaviour
         if (TimerFeedbackUI.Instance != null)
         {
             TimerFeedbackUI.Instance.ShowSpawnRateNotification("You've angered the horde!\nSpawn rates increased!", Color.red);
+            AudioManager.Instance.PlaySpawnRateIncreaseSound();
         }
     }
 
@@ -108,7 +109,8 @@ public class EnemySpawner : MonoBehaviour
 
         if (TimerFeedbackUI.Instance != null)
         {
-            TimerFeedbackUI.Instance.ShowSpawnRateNotification("Your power overwhelms them!\nSpawn rates decreased!", Color.blue);
+            TimerFeedbackUI.Instance.ShowSpawnRateNotification("Your power overwhelms them!\nSpawn rates decreased!", Color.cyan);
+            AudioManager.Instance.PlaySpawnRateDecreaseSound();
         }
     }
 
