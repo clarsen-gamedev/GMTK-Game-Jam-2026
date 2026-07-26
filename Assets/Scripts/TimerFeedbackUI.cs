@@ -105,8 +105,8 @@ public class TimerFeedbackUI : MonoBehaviour
         if (targetText == null) return;
         if (spawnRoutine != null) StopCoroutine(spawnRoutine);
 
-        // Play spawn rate increase sound
-        if (AudioManager.Instance != null) AudioManager.Instance.PlaySpawnRateIncreaseSound();
+        //// Play spawn rate increase sound
+        //if (AudioManager.Instance != null) AudioManager.Instance.PlaySpawnRateIncreaseSound();
 
         targetText.color = color;
         targetText.text = message;

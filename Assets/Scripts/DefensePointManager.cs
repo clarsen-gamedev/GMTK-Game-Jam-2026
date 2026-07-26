@@ -88,7 +88,7 @@ public class DefensePointManager : MonoBehaviour
         // Show Pop-Up Notification on Canvas
         if (TimerFeedbackUI.Instance != null && newTarget != null)
         {
-            TimerFeedbackUI.Instance.ShowDefensePointNotification($"DEFENSE POINT MOVED!");
+            TimerFeedbackUI.Instance.ShowDefensePointNotification($"DEFENSE POINT MOVED");
         }
 
         Debug.Log($"Defense Point Swapped! New Target: {newTarget.gameObject.name}");
