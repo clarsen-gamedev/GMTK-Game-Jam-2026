@@ -9,7 +9,7 @@ public enum PowerupType
 }
 
 [CreateAssetMenu(fileName = "NewPowerup", menuName = "ScriptableObjects/Powerup Data")]
-public class PowerupData : MonoBehaviour
+public class PowerupData : ScriptableObject
 {
     #region Variables
     [Header("Display Info")]
