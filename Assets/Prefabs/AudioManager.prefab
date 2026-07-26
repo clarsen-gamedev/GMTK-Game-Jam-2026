@@ -151,7 +151,7 @@ MonoBehaviour:
   gameOverThemeVolume: 0.3
   buttonClickClip: {fileID: 8300000, guid: 27c150cb236873e45b4cccbff85fb4a0, type: 3}
   spawnRateIncreaseClip: {fileID: 8300000, guid: b05eaba24cc4f1748a9c7483cee2cbac, type: 3}
-  spawnRateDecreaseClip: {fileID: 0}
+  spawnRateDecreaseClip: {fileID: 8300000, guid: 5bb323cbfb87688408e0f144c911b209, type: 3}
   timerGainClip: {fileID: 8300000, guid: c352e3a383a747944976cd10753a4eac, type: 3}
   timerLossClip: {fileID: 8300000, guid: 06660c0672be8024194e13cdf6ab8f12, type: 3}
   defenseSwitchClip: {fileID: 8300000, guid: 2935ebeecaef6f34f8f792f06b2b7746, type: 3}
