@@ -33,7 +33,7 @@ public class TitleScreenManager : MonoBehaviour
     }
 
     // Play Game Button
-    public void PlayGame()
+    public void HowToPlay()
     {
         GetComponent<AudioSource>().Play(); // Play the button click sound effect
         UISwitch(UIScreens.INSTRUCTIONS);   // Switch to the instructions screen
