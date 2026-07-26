@@ -143,9 +143,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 0}
   musicSource: {fileID: 0}
-  titleTheme: {fileID: 0}
-  mainGameTheme: {fileID: 0}
-  gameOverTheme: {fileID: 0}
+  titleTheme: {fileID: 8300000, guid: 4ee465d9d4a2ae44b952b5a24b124457, type: 3}
+  titleThemeVolume: 0.15
+  mainGameTheme: {fileID: 8300000, guid: 98533c5d3482feb4b821452b39eb5fd9, type: 3}
+  mainGameThemeVolume: 0.15
+  gameOverTheme: {fileID: 8300000, guid: df0bbae2b8fd83b47a74ed05f1eee5c8, type: 3}
+  gameOverThemeVolume: 0.15
   buttonClickClip: {fileID: 8300000, guid: 27c150cb236873e45b4cccbff85fb4a0, type: 3}
   spawnRateIncreaseClip: {fileID: 8300000, guid: b05eaba24cc4f1748a9c7483cee2cbac, type: 3}
   timerGainClip: {fileID: 8300000, guid: c352e3a383a747944976cd10753a4eac, type: 3}

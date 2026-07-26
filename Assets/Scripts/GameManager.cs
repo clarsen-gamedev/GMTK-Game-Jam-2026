@@ -43,14 +43,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        //#region Game Over Logic
-        //if (isGameOver)
-        //{
-        //    if (Input.GetKeyDown(KeyCode.R)) RestartGame();
-        //    return;
-        //}
-        //#endregion
-
         #region Countdown Timer Logic
         if (!isTimerRunning) return;
 
@@ -85,6 +77,7 @@ public class GameManager : MonoBehaviour
     private void OnTimeExpired()
     {
         isGameOver = true;
+        Time.timeScale = 0f;
 
         //Display formatted total play time on Game Over screen
         if (finalTimeText != null)
@@ -99,9 +92,10 @@ public class GameManager : MonoBehaviour
             gameOverPanel.SetActive(true);
         }
 
-        SetAlpha(timerText, timerText.color, 0f);
+        // Play Game Over music
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayGameOverTheme();
 
-        Time.timeScale = 0f;
+        SetAlpha(timerText, timerText.color, 0f);
     }
 
     public void RestartGame()

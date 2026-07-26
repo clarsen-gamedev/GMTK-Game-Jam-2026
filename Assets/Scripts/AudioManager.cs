@@ -15,8 +15,11 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music Tracks")]
     [SerializeField] private AudioClip titleTheme;
+    [Range(0f, 1f)] [SerializeField] private float titleThemeVolume = 1f;
     [SerializeField] private AudioClip mainGameTheme;
+    [Range(0f, 1f)][SerializeField] private float mainGameThemeVolume = 1f;
     [SerializeField] private AudioClip gameOverTheme;
+    [Range(0f, 1f)][SerializeField] private float gameOverThemeVolume = 1f;
 
     [Header("UI & Menu Clips")]
     [SerializeField] private AudioClip buttonClickClip;
@@ -62,7 +65,7 @@ public class AudioManager : MonoBehaviour
     }
 
     #region Music Player Controls
-    public void PlayMusic(AudioClip clip, float fadeDuration = 0.5f)
+    public void PlayMusic(AudioClip clip, float targetVolume = 1f, bool loop = true, float fadeDuration = 0.5f)
     {
         if (clip == null || musicSource == null) return;
 
@@ -70,21 +73,22 @@ public class AudioManager : MonoBehaviour
         if (musicSource.clip == clip && musicSource.isPlaying) return;
 
         if (musicFadeRoutine != null) StopCoroutine(musicFadeRoutine);
-        musicFadeRoutine = StartCoroutine(CrossfadeMusic(clip, fadeDuration));
+        musicSource.loop = loop;
+        musicFadeRoutine = StartCoroutine(CrossfadeMusic(clip, targetVolume, fadeDuration));
     }
 
     // Direct helper methods for quick scene triggers
-    public void PlayTitleTheme() => PlayMusic(titleTheme);
-    public void PlayMainGameTheme() => PlayMusic(mainGameTheme);
-    public void PlayGameOverTheme() => PlayMusic(gameOverTheme);
+    public void PlayTitleTheme() => PlayMusic(titleTheme, titleThemeVolume, loop:true);
+    public void PlayMainGameTheme() => PlayMusic(mainGameTheme, mainGameThemeVolume, loop:true);
+    public void PlayGameOverTheme() => PlayMusic(gameOverTheme, gameOverThemeVolume, loop:false);
 
     public void StopMusic(float fadeDuration = 0.5f)
     {
         if (musicFadeRoutine != null) StopCoroutine(musicFadeRoutine);
-        musicFadeRoutine = StartCoroutine(CrossfadeMusic(null, fadeDuration));
+        musicFadeRoutine = StartCoroutine(CrossfadeMusic(null, 0f, fadeDuration));
     }
 
-    private IEnumerator CrossfadeMusic(AudioClip newClip, float duration)
+    private IEnumerator CrossfadeMusic(AudioClip newClip, float targetVolume, float duration)
     {
         float startVolume = musicSource.volume;
 
@@ -103,7 +107,7 @@ public class AudioManager : MonoBehaviour
         // Change clip
         musicSource.clip = newClip;
 
-        // Fade in new song
+        // Fade in new song to targetVolume
         if (newClip != null)
         {
             musicSource.Play();
@@ -111,16 +115,16 @@ public class AudioManager : MonoBehaviour
             while (elapsed < duration)
             {
                 elapsed += Time.unscaledDeltaTime;
-                musicSource.volume = Mathf.Lerp(0f, startVolume, elapsed / duration);
+                musicSource.volume = Mathf.Lerp(0f, targetVolume, elapsed / duration);
                 yield return null;
             }
+            musicSource.volume = targetVolume;
         }
         else
         {
             musicSource.Stop();
+            musicSource.volume = 0f;
         }
-
-        musicSource.volume = startVolume;
     }
     #endregion
 
