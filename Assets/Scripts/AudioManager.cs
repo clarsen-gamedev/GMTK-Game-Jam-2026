@@ -142,7 +142,7 @@ public class AudioManager : MonoBehaviour
     // Notification Sounds
     public void PlaySpawnRateIncreaseSound() => PlayOneShot(spawnRateIncreaseClip, 0.3f);
     public void PlaySpawnRateDecreaseSound() => PlayOneShot(spawnRateDecreaseClip, 0.7f);
-    public void PlayTimerGainSound() => PlayOneShot(timerGainClip);
+    public void PlayTimerGainSound() => PlayOneShot(timerGainClip, 0.7f);
     public void PlayTimerLossSound() => PlayOneShot(timerLossClip);
     public void PlayDefenseSwitchSound() => PlayOneShot(defenseSwitchClip);
 
