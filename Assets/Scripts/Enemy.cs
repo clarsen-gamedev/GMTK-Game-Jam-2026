@@ -137,6 +137,12 @@ public class Enemy : MonoBehaviour
             // Play enemy defeated sound
             if (AudioManager.Instance != null) AudioManager.Instance.PlayEnemyDefeatedSound();
 
+            // TESTING ITEM DROP CODE, COMMENT IF NOT WORKING AS INTENDED
+            if (TryGetComponent<PowerupDropTable>(out var dropTable))
+            {
+                dropTable.TryDropPowerup(transform.position);
+            }
+
             EnemySpawner.RegisterEnemyKill();
             Destroy(gameObject);
         }
